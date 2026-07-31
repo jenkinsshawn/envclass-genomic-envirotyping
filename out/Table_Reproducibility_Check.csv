@@ -1,0 +1,24 @@
+item,expected,observed,pass
+MG 0 clusters reproduce (ARI),1,1,TRUE
+MG 0 silhouette,0.344,0.344083971947317,TRUE
+MG I clusters reproduce (ARI),1,1,TRUE
+MG I silhouette,0.336,0.336227672895353,TRUE
+MG II clusters reproduce (ARI),1,1,TRUE
+MG II silhouette,0.377,0.376929422973439,TRUE
+MG III clusters reproduce (ARI),1,1,TRUE
+MG III silhouette,0.203,0.203412143882677,TRUE
+MG IV clusters reproduce (ARI),1,1,TRUE
+MG IV silhouette,0.395,0.395177941087632,TRUE
+Table 1 Mantel MG I,0.64,0.640442507937805,TRUE
+Table 1 n MG I,15,15,TRUE
+Table 1 Mantel MG II,0.566,0.565922058783565,TRUE
+Table 1 n MG II,17,17,TRUE
+Table 1 Mantel MG III,0.596,0.596024369635559,TRUE
+Table 1 n MG III,22,22,TRUE
+Table 1 Mantel MG IV,0.561,0.560780857074687,TRUE
+Table 1 n MG IV,14,14,TRUE
+disjoint mean MG I,0.496,0.496,TRUE
+disjoint mean MG II,0.461,0.461,TRUE
+disjoint mean MG III,0.425,0.425,TRUE
+disjoint mean MG IV,0.4,0.4,TRUE
+published method ARI = 1 in all MGs,5,5,TRUE

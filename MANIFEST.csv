@@ -1,0 +1,8 @@
+script,regenerates
+01_marker_profiles.R,"marker response profiles, clusters, subsampling consensus, temporal windows"
+02_phenotypic_mantel.R,"Table 1, Mantel and partial Mantel"
+03_disjoint_genotype_control.R,"Fig. 3, disjoint-genotype control"
+04_method_grid.R,"15-method grid, adjusted Rand index against the reported partition"
+05_permutation_null.R,permutation null for cluster separation
+06_county_projection.R,"county projection, Fig. 4"
+07_publication_figures.R,"Figs. 1, 2"

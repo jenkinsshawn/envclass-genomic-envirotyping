@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+*.Rproj
+*.bak
+
+# generated figures are large and regenerable
+figures/*
+!figures/.gitkeep
+
+# keep the result tables, they are the evidence
+out/*
+!out/.gitkeep
+!out/*.csv
