@@ -1,0 +1,87 @@
+loc_key,fips,source,lat,lon
+albany,29075,nass_v2_results train_locs,40.2523,-94.3328
+ames,19015,nass_v2_results train_locs,42.0215,-93.7745
+arthur,17041,nass_v2_results train_locs,39.71,-88.47
+becker,27141,Census geocoder,45.3452,-93.8465
+beemer,31039,nass_v2_results train_locs,41.782,-96.786
+belleville,17163,nass_v2_results train_locs,38.5332,-89.8945
+boone,19015,Census geocoder,42.0095,-93.78
+britton,26091,nass_v2_results train_locs,41.9256,-83.8246
+butlerville,18079,nass_v2_results train_locs,39.0362,-85.5264
+byron,31129,Census geocoder,40.1,-97.87
+casselton,38017,nass_v2_results train_locs,46.9005,-97.2112
+cedar rapids,31077,Census geocoder,41.57,-98.52
+clay center,31035,nass_v2_results train_locs,40.52,-98.06
+climax,27119,Census geocoder,47.695,-96.8081
+columbia,29019,nass_v2_results train_locs,38.8894,-92.2081
+cook,31097,Census geocoder,40.5138,-96.19315
+cotesfield,31093,nass_v2_results train_locs,41.36,-98.63
+crawfordsville,19115,nass_v2_results train_locs,41.1944,-91.48
+crookston,27119,nass_v2_results train_locs,47.8197,-96.6114
+danvers,27151,nass_v2_results train_locs,45.2803,-95.7591
+david city,31023,Census geocoder,41.253,-97.13
+de witt,31067,nass_v2_results train_locs,40.397,-96.844
+east lansing,26065,nass_v2_results train_locs,42.7088,-84.4682
+eldora,19083,Census geocoder,42.36,-93.1
+falls city,31147,Census geocoder,40.058,-95.602
+flora,17025,nass_v2_results train_locs,38.65725,-88.44765
+galesburg,38097,Census geocoder,47.3129,-97.4444
+glyndon,27027,Census geocoder,46.893,-96.5111
+goehner,31159,nass_v2_results train_locs,40.819,-97.327
+grandin,38097,Census geocoder,47.2688,-97.0927
+hartington,31027,Census geocoder,42.621,-97.264
+hatton,38035,Census geocoder,47.72155,-97.37995
+hildreth,31083,Census geocoder,40.331,-99.384
+holdrege,31137,nass_v2_results train_locs,40.5719,-99.4327
+hooper,31053,nass_v2_results train_locs,41.535,-96.534
+hoytville,39173,nass_v2_results train_locs,41.2126,-83.7578
+ivesdale,17019,nass_v2_results train_locs,39.9434,-88.4553
+jackson,47113,nass_v2_results train_locs,35.61,-88.81
+kanawha,19081,nass_v2_results train_locs,42.9333,-93.7924
+lamberton,27127,nass_v2_results train_locs,44.23,-95.26
+lenawee,26091,Census geocoder,41.9,-84.07
+lincoln,31109,nass_v2_results train_locs,40.8612,-96.6001
+lucas,19117,Census geocoder,40.9801,-93.4157
+manhattan,20161,nass_v2_results train_locs,39.1404,-96.62
+mccool junction,31059,Census geocoder,40.66,-97.62
+mead,31155,nass_v2_results train_locs,41.1593,-96.4227
+monmouth,17187,nass_v2_results train_locs,40.92155,-90.6869
+moorhead,27027,nass_v2_results train_locs,47.0062,-96.802
+morris,27149,nass_v2_results train_locs,45.5861,-95.9139
+neoga,17035,nass_v2_results train_locs,39.323,-88.452
+north bend,31053,nass_v2_results train_locs,41.462,-96.768
+northwood,38035,Census geocoder,47.7341,-97.5667
+novelty,29205,nass_v2_results train_locs,39.9428,-92.0534
+onaga,20149,nass_v2_results train_locs,39.4889,-96.17
+ord,31175,Census geocoder,41.603,-98.935
+ottawa,20059,nass_v2_results train_locs,38.62,-95.27
+perley,27027,Census geocoder,47.0703,-96.6906
+perry,17149,Census geocoder,39.804,-90.8216
+phillips,31081,nass_v2_results train_locs,40.871,-98.177
+plymouth,31097,Census geocoder,40.341,-96.35
+pontiac,17105,nass_v2_results train_locs,40.83965,-88.628
+portageville-clay,29143,nass_v2_results train_locs,36.4253,-89.6995
+portageville-loam,29143,Census geocoder,36.4253,-89.6995
+rock port,29005,nass_v2_results train_locs,40.273,-95.4743
+romney,18157,nass_v2_results train_locs,40.2338,-86.8889
+roseau,27135,Census geocoder,48.842,-95.78035
+rosemount,27037,nass_v2_results train_locs,44.72625,-93.1135
+saginaw,26145,nass_v2_results train_locs,43.4003,-83.8684
+salina,20169,Census geocoder,38.6755,-97.6044
+savoy,17019,Census geocoder,40.05675,-88.23355
+shelly,27107,nass_v2_results train_locs,47.46,-96.82
+south charleston,39023,nass_v2_results train_locs,39.8572,-83.6708
+stevens creek,31109,nass_v2_results train_locs,40.8631,-96.59575
+sutherland,19141,nass_v2_results train_locs,42.9262,-95.5281
+tekamah,31021,nass_v2_results train_locs,41.772,-96.22
+thief river falls,27113,Census geocoder,48.113,-96.184
+urbana,17019,nass_v2_results train_locs,40.0628,-88.2339
+wanatah,18127,nass_v2_results train_locs,41.4444,-86.9382
+waseca,27161,nass_v2_results train_locs,44.08,-93.51
+west lafayette,18157,nass_v2_results train_locs,40.4742,-86.9928
+westbrook,27033,nass_v2_results train_locs,44.0258,-95.3444
+williamston,26065,Census geocoder,42.652,-84.326
+wooster,39169,nass_v2_results train_locs,40.7565,-81.9004
+worms,31121,nass_v2_results train_locs,41.0972,-98.269
+wymore,31067,Census geocoder,40.1222,-96.6625
+york,31185,Census geocoder,40.87,-97.589

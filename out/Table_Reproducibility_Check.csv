@@ -22,3 +22,22 @@ disjoint mean MG II,0.461,0.461,TRUE
 disjoint mean MG III,0.425,0.425,TRUE
 disjoint mean MG IV,0.4,0.4,TRUE
 published method ARI = 1 in all MGs,5,5,TRUE
+permutation: no permuted silhouette >= observed (all MGs),0,0,TRUE
+county LOO accuracy MG 0,0.668,0.668,TRUE
+county LOO accuracy MG I,0.789,0.789473684210526,TRUE
+county LOO accuracy MG II,0.727,0.727272727272727,TRUE
+county LOO accuracy MG III,0.64,0.64,TRUE
+county LOO accuracy MG IV,0.603,0.602666666666667,TRUE
+yield divergence MG I (kg/ha),303,302.762465331384,TRUE
+yield divergence MG II (kg/ha),292,292.298949427314,TRUE
+yield divergence MG III (kg/ha),334,334.001523928983,TRUE
+yield divergence MG IV (kg/ha),364,363.633489513408,TRUE
+latitude LOO accuracy MG I,0.846,0.846153846153846,TRUE
+latitude LOO accuracy MG II,0.615,0.615384615384615,TRUE
+latitude LOO accuracy MG III,0.448,0.448275862068966,TRUE
+latitude LOO accuracy MG IV,0.684,0.68421052631579,TRUE
+"raw-yield response, Mantel r with genomic distance MG I",0.168,0.168323498440654,TRUE
+"raw-yield response, Mantel r with genomic distance MG II",0.129,0.12883297466204,TRUE
+"raw-yield response, Mantel r with genomic distance MG III",0.21,0.209813736638198,TRUE
+"raw-yield response, Mantel r with genomic distance MG IV",0.185,0.184702214731698,TRUE
+"mixed-model silhouette reduction, mean over MGs (%)",38,37.8933297194477,TRUE

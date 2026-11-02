@@ -153,12 +153,13 @@ save_tiff(fig2, "Fig2_Classification_MDS.tiff", w_mm = 174, h_mm = 120)
 ## ---- FIGURE 5: RF variable importance (no-yield projection) ------------------
 ## Top 15 features per MG, from the 87-feature circularity-clean model.
 imp <- rbindlist(lapply(c("0","I","II","III","IV"), function(mg) {
-  f <- file.path(CFG$table_dir, sprintf("RF_Importance_NoYield_MG%s.csv", mg))
+  f <- file.path(CFG$table_dir, sprintf("RF_Importance_v2_MG%s.csv", mg))
   if (!file.exists(f)) return(NULL)
   d <- fread(f); setnames(d, 1:2, c("feature","MDA"))
   d <- d[order(-MDA)][1:15]
   d[, MG := paste0("MG ", mg)]; d
 }), fill = TRUE)
+if (nrow(imp) > 0) {
 imp[, MG := factor(MG, levels = paste0("MG ", c("0","I","II","III","IV")))]
 
 if (have("tidytext")) {
@@ -178,6 +179,7 @@ if (have("tidytext")) {
     theme_pub(8) + theme(axis.text.y = element_text(size = 6))
 }
 save_tiff(fig5, "Fig5_RF_Importance.tiff", w_mm = 174, h_mm = 140)
+} else message("Fig. S2 skipped: run R/12_county_projection_v2.R first")
 
 ## ---- (optional) ADVANTAGE PANEL: genomic/envirotyping ratio by MG -----------
 adv <- fin[, .(MG, ratio)]
@@ -212,11 +214,12 @@ make_county_map <- function() {
   
   # read no-yield predictions per MG, keep each county's prediction for its zone
   preds <- rbindlist(lapply(c("0","I","II","III","IV"), function(mg) {
-    f <- file.path(CFG$table_dir, sprintf("County_Predictions_NoYield_MG%s.csv", mg))
+    f <- file.path(CFG$table_dir, sprintf("County_Predictions_v2_all_87_MG%s.csv", mg))
     if (!file.exists(f)) return(NULL)
-    d <- fread(f); d[, MGzone := mg]
+    d <- fread(f, colClasses = list(character = "fips")); d[, fips := as.integer(fips)]; d[, MGzone := mg]
     d[, env_type := paste0("MG", mg, "_C", predicted)]; d
   }), fill = TRUE)
+  if (!nrow(preds)) stop("county map: run R/12_county_projection_v2.R first")
   
   m <- merge(cty, as.data.frame(preds[, .(fips, MGzone, env_type, confidence)]),
              by = c("fips","MGzone"))
@@ -330,7 +333,10 @@ make_permnull <- function(n_perm = 100) {
     theme_pub()
   save_tiff(fig3, "Fig3_Permutation_Null.tiff", w_mm = 129, h_mm = 90)
 }
-make_permnull(n_perm = 100)
+## The permutation figure is now made by R/10_permutation_null_v2.R (Fig. S1).
+## make_permnull() below pooled profiles across maturity groups and is kept
+## only for reference.
+# make_permnull(n_perm = 100)
 
 
 message("\nDone. TIFFs are in: ", CFG$out_dir)
