@@ -9,7 +9,8 @@ if (!exists('ROOT')) source('R/00_setup.R')
 ##                    geographic distance (rebuilt from R/02, same locations)
 ##   mds.csv          two-dimensional scaling of profile distance, all MGs
 ##   loc_coords.csv   median latitude and longitude of each location
-##   county_gdd.csv   county mean growing degree days, May to September
+##   county_climate.csv  county mean growing degree days and vapor pressure
+##                    deficit, May to September
 ## ENVCLASS_LOC_FIPS (optional): data/loc_fips_offline.csv in place of the
 ## sf/tigris county join, as in R/11 and R/14.
 ## ============================================================================
@@ -53,5 +54,5 @@ fwrite(nust[, .(lat = median(Lat, na.rm = TRUE), lon = median(Long, na.rm = TRUE
 pw <- as.data.table(readRDS(file.path(CACHE, "nasa_power_counties.rds")))
 setnames(pw, grep("(?i)^fips|geoid", names(pw), value = TRUE)[1], "fips")
 pw[, fips := sprintf("%05d", as.integer(fips))]
-fwrite(unique(pw[, .(fips, GDD_mean)], by = "fips"), file.path(FD, "county_gdd.csv"))
+fwrite(unique(pw[, .(fips, GDD_mean, VPD_mean)], by = "fips"), file.path(FD, "county_climate.csv"))
 cat("figure data written to", FD, "\n")

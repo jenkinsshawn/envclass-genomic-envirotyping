@@ -20,5 +20,6 @@ script,regenerates
 23_blup_comparison.R,"mixed-model comparison, Online Resource Table S1"
 24_era_stability.R,"retention between eras, Online Resource Table S6"
 25_table_S5_check.R,Online Resource Table S5 and the Gene Ontology test with the 10-gene rule
-16_figure_data.R,out/figure_data/ tables for the figures
+16_figure_data.R,"out/figure_data/ tables for the figures, including county growing degree days and vapor pressure deficit"
 figures_src/make_figures.py,Figs. 1-5 and Online Resource Figs. S1-S3
+17_covariates_by_type.R,"county covariates by type and their correlation with latitude (Fig. 1, Results)"

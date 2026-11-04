@@ -129,40 +129,83 @@ def map_grid(figh):
     return fig, gs
 
 
-# ---- Fig. 1: environment types at the testing locations on county climate ------
-gdd = pd.read_csv(os.path.join(FD, "county_gdd.csv"), dtype={"fips": str}).set_index("fips").GDD_mean
-gdd = gdd[gdd.index.isin(cent.fips)]
-norm = mcolors.Normalize(*np.nanpercentile(gdd.values, [2, 98]))
-gcmap = mcolors.LinearSegmentedColormap.from_list("gdd", ["#fbfbfb", "#7a7a7a"])
-fig, gs = map_grid(5.6)
-for k, mg in enumerate(MGS):
-    ax = fig.add_subplot(gs[k // 2, k % 2], projection=PROJ)
+# ---- Fig. 1: environment types on county growing degree days and vapor pressure deficit ----
+## Two columns (growing degree days, vapor pressure deficit), one row per maturity
+## group. Counties are shaded in seven classes holding equal numbers of the counties
+## in the mapped region, so that differences within each panel are visible.
+clim = pd.read_csv(os.path.join(FD, "county_climate.csv"), dtype={"fips": str}).set_index("fips")
+clim = clim[clim.index.isin(cent.fips)]
+EXT = {}
+for mg in MGS:
     x = LOC[LOC.mg == mg]
-    ext = [x.lon.min() - 2.2, x.lon.max() + 2.2, x.lat.min() - 1.4, x.lat.max() + 1.6]
-    base_map(ax, ext, land="#eeeeee")
-    inbox = cent[(cent[lonc].between(ext[0] - 2, ext[1] + 2)) & (cent[latc].between(ext[2] - 2, ext[3] + 2))]
-    for key, f in inbox.assign(c=np.round(norm(gdd.reindex(inbox.fips).values), 2)).groupby("c"):
-        col = gcmap(float(key))
-        ax.add_geometries([COUNTY[q] for q in f.fips if q in COUNTY], PC, facecolor=col, edgecolor=col, linewidth=0.05, zorder=1)
-    overlay(ax)
-    points(ax, x)
-    panel_label(ax, k, mg)
-    if mg == "II":
-        for nm, off in [("hooper", (-36, 12)), ("mead", (-30, -16))]:
-            r = x[x.location == nm].iloc[0]
-            ax.annotate(nm.title(), xy=(r.lon, r.lat), xycoords=PC._as_mpl_transform(ax), xytext=off,
-                        textcoords="offset points", fontsize=7, zorder=7,
-                        arrowprops=dict(arrowstyle="-", lw=0.5, color="#333333"))
-ax = fig.add_subplot(gs[2, 1]); ax.axis("off")
-type_legend(ax, 0.98)
-cax = ax.inset_axes([0.08, 0.5, 0.62, 0.06])
-cb = fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=gcmap), cax=cax, orientation="horizontal")
-cb.set_label("County growing degree days, May to September\n(mean of 1993 to 2024)", fontsize=8)
-cb.ax.tick_params(labelsize=7)
-h3 = [plt.Line2D([], [], marker="o", ls="", markerfacecolor="#bbbbbb", markeredgecolor="black",
-                 markeredgewidth=0.7, markersize=6, label="Testing location, colored by its type\nfrom marker profiles")]
-ax.legend(handles=h3, loc="upper left", bbox_to_anchor=(0.06, 0.16), frameon=False, fontsize=8)
+    EXT[mg] = [x.lon.min() - 2.2, x.lon.max() + 2.2, x.lat.min() - 1.4, x.lat.max() + 1.6]
+_f = plt.figure(); _a = _f.add_subplot(projection=PROJ); ASP = {}
+for mg in MGS:
+    _a.set_extent(EXT[mg], crs=PC); _e = _a.get_extent(); ASP[mg] = (_e[3] - _e[2]) / (_e[1] - _e[0])
+plt.close(_f)
+region = cent[np.any([cent[lonc].between(e[0], e[1]) & cent[latc].between(e[2], e[3]) for e in EXT.values()], axis=0)]
+BG = [("GDD_mean", "Growing degree days, May to September", "{:,.0f}"),
+      ("VPD_mean", "Vapor pressure deficit, May to September (kPa)", "{:.2f}")]
+SHADES = mcolors.LinearSegmentedColormap.from_list("bg", ["#e8e8e8", "#3c3c3c"])(np.linspace(0, 1, 7))
+brks = {}
+for var, _, _ in BG:
+    b = np.nanquantile(clim[var].reindex(region.fips).dropna().values, np.linspace(0, 1, 8))
+    b[0] = clim[var].min() - 1e-9; b[-1] = clim[var].max() + 1e-9; brks[var] = b
+FW, FH = 6.85, 9.1
+L, R, GAPX, PW = 0.12, 0.10, 0.08, None
+PW = (FW - L - R - GAPX) / 2
+top_pad, gap_y, bottom_area = 0.26, 0.07, 1.02
+scale = (FH - top_pad - bottom_area - gap_y * 4) / sum(ASP[m] * PW for m in MGS)
+PWs = PW * min(scale, 1.0)
+x0s = [L + (PW - PWs) / 2, L + PW + GAPX + (PW - PWs) / 2]
+fig = plt.figure(figsize=(FW, FH))
+ytop = FH - top_pad
+letters = "abcdefghij"
+for r, mg in enumerate(MGS):
+    ph = ASP[mg] * PWs
+    for c, (var, lab, fmt) in enumerate(BG):
+        ax = fig.add_axes([x0s[c] / FW, (ytop - ph) / FH, PWs / FW, ph / FH], projection=PROJ)
+        ext = EXT[mg]
+        base_map(ax, ext, land="#ffffff")
+        inbox = cent[(cent[lonc].between(ext[0] - 2, ext[1] + 2)) & (cent[latc].between(ext[2] - 2, ext[3] + 2))]
+        cls = np.digitize(clim[var].reindex(inbox.fips).values, brks[var][1:-1])
+        ok = ~np.isnan(clim[var].reindex(inbox.fips).values)
+        for cc, f in inbox[ok].assign(c=cls[ok]).groupby("c"):
+            col = SHADES[int(cc)]
+            ax.add_geometries([COUNTY[q] for q in f.fips if q in COUNTY], PC, facecolor=col, edgecolor=col, linewidth=0.05, zorder=1)
+        overlay(ax)
+        x = LOC[LOC.mg == mg]
+        points(ax, x, s=22)
+        ax.text(0.012, 0.975, f"{letters[2 * r + c]}", transform=ax.transAxes, ha="left", va="top", fontsize=9, fontweight="bold",
+                zorder=8, bbox=dict(facecolor="white", edgecolor="none", pad=1.0, alpha=0.85))
+        ax.text(0.06, 0.975, f"MG {mg}", transform=ax.transAxes, ha="left", va="top", fontsize=8, zorder=8,
+                bbox=dict(facecolor="white", edgecolor="none", pad=1.0, alpha=0.85))
+        if mg == "II":
+            for nm, off in [("hooper", (-30, 11)), ("mead", (-26, -14))]:
+                rr = x[x.location == nm].iloc[0]
+                ax.annotate(nm.title(), xy=(rr.lon, rr.lat), xycoords=PC._as_mpl_transform(ax), xytext=off,
+                            textcoords="offset points", fontsize=6, zorder=9,
+                            bbox=dict(facecolor="white", edgecolor="none", pad=0.6, alpha=0.85),
+                            arrowprops=dict(arrowstyle="-", lw=0.5, color="#222222"))
+        if r == 0:
+            fig.text((x0s[c] + PWs / 2) / FW, (FH - top_pad / 2) / FH, lab, ha="center", va="center", fontsize=8)
+    ytop -= ph + gap_y
+## legends: one class bar under each column, then the type key
+for c, (var, lab, fmt) in enumerate(BG):
+    cax = fig.add_axes([(x0s[c] + 0.15 * PWs) / FW, (bottom_area - 0.30) / FH, 0.7 * PWs / FW, 0.09 / FH])
+    cmap = mcolors.ListedColormap(SHADES)
+    cb = fig.colorbar(plt.cm.ScalarMappable(norm=mcolors.BoundaryNorm(np.arange(8), 7), cmap=cmap), cax=cax,
+                      orientation="horizontal", ticks=np.arange(1, 7))
+    cb.ax.set_xticklabels([fmt.format(v) for v in brks[var][1:-1]]); cb.ax.tick_params(labelsize=6, length=2)
+    cb.outline.set_linewidth(0.5)
+    cb.set_label("County mean, 1993 to 2024", fontsize=7, labelpad=2)
+lax = fig.add_axes([L / FW, 0.0, (FW - L - R) / FW, 0.34 / FH]); lax.axis("off")
+h = [plt.Line2D([], [], marker="o", ls="", markerfacecolor=PAL[t], markeredgecolor="black", markeredgewidth=0.6,
+                markersize=6, label=f"Type {t}") for t in [1, 2, 3, 4]]
+lax.legend(handles=h, loc="center", ncol=4, frameon=False, fontsize=7, handletextpad=0.3, columnspacing=1.4,
+           title="Testing locations, colored by environment type (numbered within each maturity group)", title_fontsize=7)
 save(fig, "Fig1")
+
 
 # ---- Fig. 2: profile distance and response distance ------------------------------
 pairs = pd.read_csv(os.path.join(FD, "pairs.csv"), dtype={"mg": str})

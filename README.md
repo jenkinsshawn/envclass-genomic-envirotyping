@@ -18,8 +18,8 @@ source("run_all.R")
 `run_all.R` writes `out/run_log.txt` and `out/Table_Reproducibility_Check.csv`,
 which compares regenerated values (clusters, silhouettes, Table 1, the
 split-half control, the permutation test, county cross-validation, yield
-divergence, latitude models, the marker-count permutation test and the
-mixed-model comparison) with the values
+divergence, latitude models, the marker-count permutation test, the county
+covariates by type and the mixed-model comparison) with the values
 reported in the paper. Slow scripts are switched off at the top of
 `run_all.R`; switch them on for the final check. Scripts that take arguments
 can also be run from PowerShell, for example
@@ -48,7 +48,8 @@ Rscript R/13_county_projection_permutation.R 1000
 | `13_county_projection_permutation.R` | permutation test of county cross-validation accuracy (run after 12) |
 | `14_raw_yield_response.R` | phenotypic response distance from raw yields, Online Resource 1 Supplementary Methods |
 | `15_type_profile_null.R` | permutation test of the number of markers that differ between types (Table 2), and of the correlation between type mean profiles (MG I, II, IV) |
-| `16_figure_data.R` | location pairs, two-dimensional scaling, location coordinates and county growing degree days for the figures (`out/figure_data/`) |
+| `16_figure_data.R` | location pairs, two-dimensional scaling, location coordinates and county growing degree days and vapor pressure deficit for the figures (`out/figure_data/`) |
+| `17_covariates_by_type.R` | share of the variation in each county covariate that lies between types, and correlation of growing degree days and vapor pressure deficit with latitude (Fig. 1, Results) |
 | `20_yield_divergence.R` | yield divergence between types, random-grouping comparison, yield penalty |
 | `21_latitude_test.R` | latitude models, latitude overlap, same-latitude pairs |
 | `22_marker_density.R` | marker subsets, Online Resource Table S2 |

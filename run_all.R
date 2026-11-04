@@ -41,7 +41,8 @@ RUN <- c("01_marker_profiles.R"               = TRUE,
          "23_blup_comparison.R"               = TRUE,
          "24_era_stability.R"                 = TRUE,
          "25_table_S5_check.R"                = TRUE,
-         "16_figure_data.R"                   = TRUE)
+         "16_figure_data.R"                   = TRUE,
+         "17_covariates_by_type.R"            = TRUE)
 
 source("R/00_setup.R")
 
@@ -190,6 +191,14 @@ if (fresh(dm)) {
   }
   add("marker counts: largest permuted count below observed (MG I-IV)", 4,
       d[mg != "0", sum(null_max < observed)], tol = 0)
+}
+ct <- file.path(OUT, "Table_Covariates_by_Type.csv")
+if (fresh(ct)) {
+  d <- fread(ct)
+  add("growing degree days, share of variation between types MG I", 0.533,
+      d[mg == "I" & covariate == "GDD_mean", share_between_types], tol = 0.005)
+  add("vapor pressure deficit, smallest share between types over MGs", 0.181,
+      d[covariate == "VPD_mean", min(share_between_types)], tol = 0.005)
 }
 b7 <- file.path(OUT, "Table_S7_BLUP_Comparison.csv")
 if (fresh(b7)) {

@@ -1,3 +1,17 @@
+# Changes in v1.1.2
+
+- Fig. 1 now shows the environment types on two county backgrounds side by
+  side, growing degree days and vapor pressure deficit (May to September), each
+  in seven classes holding equal numbers of counties of the mapped region.
+- Added R/17_covariates_by_type.R: for each county covariate of the county
+  model, the share of its variation among the training counties that lies
+  between types (`out/Table_Covariates_by_Type.csv`), and the correlation of
+  growing degree days and vapor pressure deficit with latitude
+  (`out/Table_Covariates_Latitude.csv`).
+- R/16 writes `out/figure_data/county_climate.csv` (growing degree days and
+  vapor pressure deficit) in place of `county_gdd.csv`.
+- run_all.R runs script 17 and checks two of its values.
+
 # Changes in v1.1.1
 
 - Added `figures_src/make_figures.py`, which draws Figs. 1 to 5 and Online
