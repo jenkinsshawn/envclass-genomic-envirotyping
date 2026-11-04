@@ -34,12 +34,14 @@ RUN <- c("01_marker_profiles.R"               = TRUE,
          "12_county_projection_v2.R"          = TRUE,
          "13_county_projection_permutation.R" = TRUE,
          "14_raw_yield_response.R"            = TRUE,
+         "15_type_profile_null.R"             = TRUE,
          "20_yield_divergence.R"              = TRUE,
          "21_latitude_test.R"                 = TRUE,
          "22_marker_density.R"                = TRUE,
          "23_blup_comparison.R"               = TRUE,
          "24_era_stability.R"                 = TRUE,
-         "25_table_S5_check.R"                = TRUE)
+         "25_table_S5_check.R"                = TRUE,
+         "16_figure_data.R"                   = TRUE)
 
 source("R/00_setup.R")
 
@@ -177,6 +179,17 @@ for (i in 1:4) {
   add(sprintf("raw-yield response, Mantel r with genomic distance MG %s", mgv),
       c(0.168, 0.129, 0.210, 0.185)[i],
       grab(rw, quote(mg == mgv), "mantel_genomic_raw"))
+}
+dm <- file.path(OUT, "Table_DiscriminatingMarkers_Null.csv")
+if (fresh(dm)) {
+  d <- fread(dm)
+  for (i in 1:4) {
+    mgv <- c("I","II","III","IV")[i]
+    add(sprintf("markers differing between types MG %s", mgv), c(987, 1435, 555, 899)[i],
+        d[mg == mgv, observed], tol = 0)
+  }
+  add("marker counts: largest permuted count below observed (MG I-IV)", 4,
+      d[mg != "0", sum(null_max < observed)], tol = 0)
 }
 b7 <- file.path(OUT, "Table_S7_BLUP_Comparison.csv")
 if (fresh(b7)) {

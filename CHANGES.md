@@ -1,3 +1,16 @@
+# Changes in v1.1.1
+
+- Added `figures_src/make_figures.py`, which draws Figs. 1 to 5 and Online
+  Resource Figs. S1 to S3 of the submitted paper from the tables in `out/`.
+- Added R/16_figure_data.R, which writes the location pairs, two-dimensional
+  scaling, location coordinates and county growing degree days used by the
+  figures to `out/figure_data/`.
+- R/15_type_profile_null.R now covers every maturity group, with the
+  Kruskal-Wallis test for any number of types, and writes
+  `out/Table_DiscriminatingMarkers_Null.csv` (Table 2).
+- run_all.R runs scripts 15 and 16 and checks the marker counts in Table 2.
+- README.md lists the figure numbers of the submitted paper.
+
 # Changes in v1.1.0
 
 - Added R/08 and R/09 (groupings from shared lines; factor-analytic model).

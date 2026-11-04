@@ -18,7 +18,8 @@ source("run_all.R")
 `run_all.R` writes `out/run_log.txt` and `out/Table_Reproducibility_Check.csv`,
 which compares regenerated values (clusters, silhouettes, Table 1, the
 split-half control, the permutation test, county cross-validation, yield
-divergence, latitude models and the mixed-model comparison) with the values
+divergence, latitude models, the marker-count permutation test and the
+mixed-model comparison) with the values
 reported in the paper. Slow scripts are switched off at the top of
 `run_all.R`; switch them on for the final check. Scripts that take arguments
 can also be run from PowerShell, for example
@@ -34,19 +35,20 @@ Rscript R/13_county_projection_permutation.R 1000
 |---|---|
 | `01_marker_profiles.R` | marker response profiles, clusters, subsampling consensus |
 | `02_phenotypic_mantel.R` | Table 1: Mantel, partial Mantel and multiple regression on distance matrices |
-| `03_disjoint_genotype_control.R` | Fig. 3, split-half control |
+| `03_disjoint_genotype_control.R` | split-half control (Fig. 2e) |
 | `04_method_grid.R` | 15 combinations of distance and clustering method |
 | `05_permutation_null.R` | earlier permutation test on chromosome-level profiles; kept for reference, not used in the paper |
 | `06_county_projection.R` | earlier 92-feature county model including NASS yield-history variables; kept for reference, not used in the paper |
-| `07_publication_figures.R` | Figs. 1 and 2 |
-| `08_shared_lines_comparison.R` | Fig. 4, groupings from shared lines |
+| `07_publication_figures.R` | earlier figure versions; kept for reference (the figures in the paper come from `figures_src/make_figures.py`) |
+| `08_shared_lines_comparison.R` | groupings from shared lines (Fig. 3) |
 | `09_fa_loadings_local.R` | factor-analytic groupings, Online Resource Table S3 (needs sommer) |
 | `10_permutation_null_v2.R` | permutation test of cluster separation, Online Resource Fig. S1 |
 | `11_partial_mantel_power.R` | power of the partial Mantel test |
-| `12_county_projection_v2.R` | 87-feature county model without yield history: cross-validation, calibration, county predictions and variable importance (Online Resource Table S4; data for Figs. S2 and S3) |
+| `12_county_projection_v2.R` | 87-feature county model without yield history: cross-validation, calibration, county predictions and variable importance (Online Resource Table S4; data for Fig. 5 and Online Resource Fig. S3) |
 | `13_county_projection_permutation.R` | permutation test of county cross-validation accuracy (run after 12) |
 | `14_raw_yield_response.R` | phenotypic response distance from raw yields, Online Resource 1 Supplementary Methods |
-| `15_type_profile_null.R` | permutation test of the number of markers that differ between types, and of the correlation between type mean profiles (MG I, II, IV) |
+| `15_type_profile_null.R` | permutation test of the number of markers that differ between types (Table 2), and of the correlation between type mean profiles (MG I, II, IV) |
+| `16_figure_data.R` | location pairs, two-dimensional scaling, location coordinates and county growing degree days for the figures (`out/figure_data/`) |
 | `20_yield_divergence.R` | yield divergence between types, random-grouping comparison, yield penalty |
 | `21_latitude_test.R` | latitude models, latitude overlap, same-latitude pairs |
 | `22_marker_density.R` | marker subsets, Online Resource Table S2 |
@@ -81,6 +83,19 @@ Added in v1.1.0:
 
 `out/` and `figures/` hold the outputs reported in the paper, for comparison
 with a fresh run.
+
+## Figures
+
+The figures in the paper (Figs. 1 to 5 and Online Resource Figs. S1 to S3)
+are drawn in Python from the tables in `out/` after `run_all.R` has run:
+
+```powershell
+python figures_src/make_figures.py <repository root>
+```
+
+This needs pandas, numpy, matplotlib, cartopy and pyshp. Cartopy downloads
+the Natural Earth county and state outlines on first use. Output goes to
+`figures/` as TIFF (600 dpi), PDF and PNG.
 
 ## Environment
 

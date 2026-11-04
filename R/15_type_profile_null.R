@@ -3,7 +3,7 @@ if (!exists('ROOT')) source('R/00_setup.R')
 ## ============================================================================
 ## 15_type_profile_null.R
 ## Correlation between the mean marker profiles of the two environment types
-## (MG I, II and IV), compared with the same quantity after line yields are
+## (MGs with two types: I, II and IV), compared with the same quantity after line yields are
 ## reassigned at random among the genotyped lines within each location, the
 ## profiles recomputed and clustered into two groups as in the main analysis.
 ## Because the types are found by clustering the profiles, a negative
@@ -20,7 +20,7 @@ if (!exists('ROOT')) source('R/00_setup.R')
 suppressPackageStartupMessages({ library(data.table); library(cluster) })
 N_PERM <- as.integer(Sys.getenv("ENVCLASS_N_PERM", "200"))
 PERM_MODE <- "classification"; MIN_N <- 30; SEED <- 42
-MGS <- c("I", "II", "IV")
+MGS <- c("0", "I", "II", "III", "IV")   # type-mean correlation only where k = 2
 ## ---- data ---------------------------------------------------------------
 nust <- fread(file.path(DATA, "nust_ecw_subset.csv"))
 nust[, loc_key := trimws(tolower(gsub(",.*$", "", Location)))]
@@ -94,17 +94,17 @@ best_sil <- function(P, max_k = MAX_K, k_fixed = NULL) {
 }
 
 
-cluster2 <- function(P) {
+clusterk <- function(P, k) {
   mv <- apply(P, 2, var, na.rm = TRUE); keep <- mv > 0
   W <- sweep(P[, keep, drop = FALSE], 2, sqrt(mv[keep]), "*")
   cm <- cor(t(W), use = "pairwise.complete.obs"); cm[is.na(cm)] <- 0
-  cutree(hclust(as.dist(1 - cm), method = "ward.D2"), 2)
+  cutree(hclust(as.dist(1 - cm), method = "ward.D2"), k)
 }
+## Kruskal-Wallis H for every marker at once (continuous profiles, no ties)
 nsig <- function(P, cl) {
-  R <- apply(P, 2, rank); N <- nrow(P); n1 <- sum(cl == 1); n2 <- N - n1
-  R1 <- colSums(R[cl == 1, , drop = FALSE]); R2 <- N * (N + 1) / 2 - R1
-  H <- 12 / (N * (N + 1)) * (R1^2 / n1 + R2^2 / n2) - 3 * (N + 1)
-  sum(p.adjust(pchisq(H, 1, lower.tail = FALSE), "BH") < 0.05)
+  R <- apply(P, 2, rank); N <- nrow(P)
+  H <- 12 / (N * (N + 1)) * Reduce(`+`, lapply(unique(cl), function(g) colSums(R[cl == g, , drop = FALSE])^2 / sum(cl == g))) - 3 * (N + 1)
+  sum(p.adjust(pchisq(H, length(unique(cl)) - 1, lower.tail = FALSE), "BH") < 0.05)
 }
 type_r <- function(P, cl) cor(colMeans(P[cl == 1, , drop = FALSE]), colMeans(P[cl == 2, , drop = FALSE]))
 
@@ -116,20 +116,23 @@ for (mg_val in MGS) {
   blocks <- lapply(setNames(locs, locs), function(l) location_block(dt, l))
   blocks <- blocks[!vapply(blocks, is.null, logical(1))]
   P0 <- do.call(rbind, lapply(blocks, function(b) profile_from(b, b$rc)))
-  obs_pub <- type_r(r$profiles, r$clusters[rownames(r$profiles)])
-  obs_reb <- type_r(P0, cluster2(P0))
+  k <- r$k
   sims <- replicate(N_PERM, {
     Pp <- do.call(rbind, lapply(blocks, function(b) profile_from(b, sample(b$rc))))
-    clp <- cluster2(Pp); c(type_r(Pp, clp), nsig(Pp, clp))
+    clp <- clusterk(Pp, k); c(if (k == 2) type_r(Pp, clp) else NA_real_, nsig(Pp, clp))
   })
   null <- sims[1, ]; nnull <- sims[2, ]
-  obs_n <- nsig(P0, cluster2(P0))
-  out_n[[mg_val]] <- data.table(mg = mg_val, observed = obs_n, null_median = median(nnull),
+  obs_n <- nsig(P0, clusterk(P0, k))
+  out_n[[mg_val]] <- data.table(mg = mg_val, k = k, observed = obs_n, null_median = median(nnull),
                                 null_q95 = quantile(nnull, 0.95), null_max = max(nnull),
                                 p = (1 + sum(nnull >= obs_n)) / (N_PERM + 1), n_perm = N_PERM)
-  out[[mg_val]] <- data.table(mg = mg_val, n_loc = nrow(P0), r_observed = obs_pub, r_rebuilt = obs_reb,
-                              null_mean = mean(null), null_q05 = quantile(null, 0.05), null_q95 = quantile(null, 0.95),
-                              p_lower = (1 + sum(null <= obs_reb)) / (N_PERM + 1), n_perm = N_PERM)
+  if (k == 2) {
+    obs_pub <- type_r(r$profiles, r$clusters[rownames(r$profiles)])
+    obs_reb <- type_r(P0, clusterk(P0, 2))
+    out[[mg_val]] <- data.table(mg = mg_val, n_loc = nrow(P0), r_observed = obs_pub, r_rebuilt = obs_reb,
+                                null_mean = mean(null), null_q05 = quantile(null, 0.05), null_q95 = quantile(null, 0.95),
+                                p_lower = (1 + sum(null <= obs_reb)) / (N_PERM + 1), n_perm = N_PERM)
+  }
   cat(mg_val, "done\n")
 }
 res_tab <- rbindlist(out); print(res_tab)
