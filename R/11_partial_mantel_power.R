@@ -59,7 +59,7 @@ cat(sprintf("Partial Mantel power: B_SIM = %d, permutations = %d, cores = %d\n",
             B_SIM, SIM_PERM, N_CORES))
 
 ## ---- 1. Table 1 distance matrices -----------------------------------------
-dist_cache <- file.path(OUT_PW, "table1_distances.rds")
+dist_cache <- file.path(OUT_PW, "table1_distances_v112.rds")
 if (file.exists(dist_cache)) {
   DISTS <- readRDS(dist_cache)
   cat("Loaded cached Table 1 distance matrices\n")

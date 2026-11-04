@@ -42,7 +42,8 @@ RUN <- c("01_marker_profiles.R"               = TRUE,
          "24_era_stability.R"                 = TRUE,
          "25_table_S5_check.R"                = TRUE,
          "16_figure_data.R"                   = TRUE,
-         "17_covariates_by_type.R"            = TRUE)
+         "17_covariates_by_type.R"            = TRUE,
+         "18_type_prediction.R"               = TRUE)
 
 source("R/00_setup.R")
 
@@ -199,6 +200,16 @@ if (fresh(ct)) {
       d[mg == "I" & covariate == "GDD_mean", share_between_types], tol = 0.005)
   add("vapor pressure deficit, smallest share between types over MGs", 0.181,
       d[covariate == "VPD_mean", min(share_between_types)], tol = 0.005)
+}
+tp <- file.path(OUT, "Table_TypePrediction_Summary.csv")
+if (fresh(tp)) {
+  d <- fread(tp)
+  for (i in 1:4) {
+    mgv <- c("I","II","III","IV")[i]
+    add(sprintf("held-out trials, same-type correlation, same year, MG %s", mgv), c(0.504, 0.341, 0.317, 0.309)[i],
+        d[mg == mgv & source == "same_year", r_type], tol = 0.01)
+  }
+  add("envirotyping Mantel r MG II (86 covariates)", 0.259, fread(file.path(OUT, "Table_PhenoMantel_Final.csv"))[mg == "II", mantel_enviro], tol = 0.002)
 }
 b7 <- file.path(OUT, "Table_S7_BLUP_Comparison.csv")
 if (fresh(b7)) {

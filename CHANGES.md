@@ -1,3 +1,18 @@
+# Changes in v1.1.3
+
+- R/02: the weather tables both carry mean vapor pressure deficit and its
+  standard deviation, and both copies were used. The duplicates are dropped
+  (as in R/12), leaving 86 envirotyping covariates. Table 1 envirotyping
+  values change in the third decimal (MG II Mantel r 0.260 to 0.259).
+- R/11 rebuilds its cached distance matrices under a new file name so the
+  corrected R/02 matrices are used.
+- Added R/18_type_prediction.R: each location-year is held out in turn, the
+  types are recomputed without it, and line performance there is predicted
+  from same-type, all, other-type, nearest, profile-nearest,
+  covariate-nearest and random sets of locations (Online Resource Table S8).
+- run_all.R runs R/18 and checks four of its values and the corrected
+  envirotyping Mantel correlation. Fig. 2 redrawn.
+
 # Changes in v1.1.2
 
 - Fig. 1 now shows the environment types on two county backgrounds side by

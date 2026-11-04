@@ -134,7 +134,10 @@ if ("package:ecodist" %in% search() || "package:proxy" %in% search()) {
 
 
 cat("\n[3] Building feature stack...\n")
-features <- merge(power_data, wx_eng,    by = "fips", all = TRUE)
+## weather_engineered repeats VPD_mean and VPD_sd from the NASA POWER table;
+## keep one copy of each (as R/12 does) so no covariate is counted twice
+wx_cols  <- setdiff(names(wx_eng), names(power_data))
+features <- merge(power_data, wx_eng[, c("fips", wx_cols), with = FALSE], by = "fips", all = TRUE)
 features <- merge(features,   soil_data, by = "fips", all = TRUE)
 features <- merge(features,   mgmt_data, by = "fips", all = TRUE)
 features <- unique(features, by = "fips")

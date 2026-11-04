@@ -34,7 +34,7 @@ Rscript R/13_county_projection_permutation.R 1000
 | Script | Regenerates |
 |---|---|
 | `01_marker_profiles.R` | marker response profiles, clusters, subsampling consensus |
-| `02_phenotypic_mantel.R` | Table 1: Mantel, partial Mantel and multiple regression on distance matrices |
+| `02_phenotypic_mantel.R` | Table 1: Mantel, partial Mantel and multiple regression on distance matrices (86 county covariates) |
 | `03_disjoint_genotype_control.R` | split-half control (Fig. 2e) |
 | `04_method_grid.R` | 15 combinations of distance and clustering method |
 | `05_permutation_null.R` | earlier permutation test on chromosome-level profiles; kept for reference, not used in the paper |
@@ -50,6 +50,7 @@ Rscript R/13_county_projection_permutation.R 1000
 | `15_type_profile_null.R` | permutation test of the number of markers that differ between types (Table 2), and of the correlation between type mean profiles (MG I, II, IV) |
 | `16_figure_data.R` | location pairs, two-dimensional scaling, location coordinates and county growing degree days and vapor pressure deficit for the figures (`out/figure_data/`) |
 | `17_covariates_by_type.R` | share of the variation in each county covariate that lies between types, and correlation of growing degree days and vapor pressure deficit with latitude (Fig. 1, Results) |
+| `18_type_prediction.R` | prediction of line performance in held-out trials from same-type, all, other-type, nearest, profile-nearest, covariate-nearest and random sets of locations (Online Resource Table S8); uses ENVCLASS_CORES workers |
 | `20_yield_divergence.R` | yield divergence between types, random-grouping comparison, yield penalty |
 | `21_latitude_test.R` | latitude models, latitude overlap, same-latitude pairs |
 | `22_marker_density.R` | marker subsets, Online Resource Table S2 |
