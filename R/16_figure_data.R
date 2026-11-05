@@ -4,7 +4,7 @@ if (!exists('ROOT')) source('R/00_setup.R')
 ## 16_figure_data.R
 ## Writes the small tables that figures_src/make_figures.py reads, to
 ## out/figure_data/:
-##   pairs.csv        location pairs of the Table 1 analysis (MG I to IV) with
+##   pairs.csv        location pairs of the Table 2 analysis (MG I to IV) with
 ##                    genomic profile, phenotypic response, envirotyping and
 ##                    geographic distance (rebuilt from R/02, same locations)
 ##   mds.csv          two-dimensional scaling of profile distance, all MGs

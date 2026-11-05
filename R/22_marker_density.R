@@ -1,7 +1,7 @@
 if (!exists('ROOT')) source('R/00_setup.R')
 
 ## ============================================================================
-## 22_marker_density.R  (Online Resource 1, Table S1)
+## 22_marker_density.R  (Online Resource 1, Table S3)
 ## Marker density sensitivity: random subsets of 2,000, 1,000 and 500 markers,
 ## 5 replicates each, compared with the full 4,625-marker partition by the
 ## adjusted Rand index.

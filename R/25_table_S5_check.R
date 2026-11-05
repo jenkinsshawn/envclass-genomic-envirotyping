@@ -1,7 +1,7 @@
 if (!exists('ROOT')) source('R/00_setup.R')
 
 ## ============================================================================
-## 25_table_S5_check.R  (Online Resource 1, Table S5 and annotation text)
+## 25_table_S5_check.R  (Online Resource 1, Table S2 and annotation text)
 ## Checks the recovered annotation tables against the archived marker
 ## results and the Online Resource text, and applies the stated Gene Ontology
 ## term-size rule.
@@ -14,7 +14,7 @@ if (!exists('ROOT')) source('R/00_setup.R')
 ##       produced by the recovered console script of 2026-07-16 19:46
 ##       (BH over terms with >= 1 foreground gene; no term-size filter)
 ##
-## Output: out/Table_S5.csv (formatted Table S5), out/Table_S5_summary.csv,
+## Output: out/Table_S5.csv (formatted Table S2), out/Table_S5_summary.csv,
 ##         out/Table_S5_GO_min10.csv
 ## ============================================================================
 

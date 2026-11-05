@@ -1,3 +1,13 @@
+# Changes in v1.1.4
+
+- Table numbers in README.md, MANIFEST.csv, run_all.R check labels and script
+  comments follow the submitted paper: main Table 1 is the validation of the
+  environment types and Table 2 the Mantel correlations; Online Resource
+  Tables S1 to S8 are numbered in order of citation (mixed-model comparison
+  S1, marker annotation S2, marker subsets S3, county covariates by type S4,
+  factor-analytic groupings S5, held-out trials S6, county cross-validation
+  S7, retention between eras S8). No code or output changed.
+
 # Changes in v1.1.3
 
 - R/02: the weather tables both carry mean vapor pressure deficit and its

@@ -1,11 +1,11 @@
 if (!exists('ROOT')) source('R/00_setup.R')
 
 ## ============================================================================
-## 23_blup_comparison.R  (Online Resource 1, Table S7)
+## 23_blup_comparison.R  (Online Resource 1, Table S1)
 ## Clusters from unshrunk adjusted deviations (published) compared with
 ## clusters from mixed-model residuals and BLUPs.
 ##
-## Reconstructed: no script or output for Table S7 was recovered. The mixed
+## Reconstructed: no script or output for Table S1 was recovered. The mixed
 ## model follows the recovered v0.4 pipeline (EnvClass_Pipeline_v0.4.R,
 ## Stage 1): YieldBuA ~ factor(Year) + (1|Strain) + (1|Environment), REML,
 ## and the GxE value is the residual y - fitted (fitted includes the shrunken

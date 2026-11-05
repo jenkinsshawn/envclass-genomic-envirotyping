@@ -16,7 +16,7 @@ source("run_all.R")
 ```
 
 `run_all.R` writes `out/run_log.txt` and `out/Table_Reproducibility_Check.csv`,
-which compares regenerated values (clusters, silhouettes, Table 1, the
+which compares regenerated values (clusters, silhouettes, Table 2, the
 split-half control, the permutation test, county cross-validation, yield
 divergence, latitude models, the marker-count permutation test, the county
 covariates by type and the mixed-model comparison) with the values
@@ -34,29 +34,29 @@ Rscript R/13_county_projection_permutation.R 1000
 | Script | Regenerates |
 |---|---|
 | `01_marker_profiles.R` | marker response profiles, clusters, subsampling consensus |
-| `02_phenotypic_mantel.R` | Table 1: Mantel, partial Mantel and multiple regression on distance matrices (86 county covariates) |
+| `02_phenotypic_mantel.R` | Table 2: Mantel, partial Mantel and multiple regression on distance matrices (86 county covariates) |
 | `03_disjoint_genotype_control.R` | split-half control (Fig. 2e) |
 | `04_method_grid.R` | 15 combinations of distance and clustering method |
 | `05_permutation_null.R` | earlier permutation test on chromosome-level profiles; kept for reference, not used in the paper |
 | `06_county_projection.R` | earlier 92-feature county model including NASS yield-history variables; kept for reference, not used in the paper |
 | `07_publication_figures.R` | earlier figure versions; kept for reference (the figures in the paper come from `figures_src/make_figures.py`) |
 | `08_shared_lines_comparison.R` | groupings from shared lines (Fig. 3) |
-| `09_fa_loadings_local.R` | factor-analytic groupings, Online Resource Table S3 (needs sommer) |
+| `09_fa_loadings_local.R` | factor-analytic groupings, Online Resource Table S5 (needs sommer) |
 | `10_permutation_null_v2.R` | permutation test of cluster separation, Online Resource Fig. S1 |
 | `11_partial_mantel_power.R` | power of the partial Mantel test |
-| `12_county_projection_v2.R` | 87-feature county model without yield history: cross-validation, calibration, county predictions and variable importance (Online Resource Table S4; data for Fig. 5 and Online Resource Fig. S3) |
+| `12_county_projection_v2.R` | 87-feature county model without yield history: cross-validation, calibration, county predictions and variable importance (Online Resource Table S7; data for Fig. 5 and Online Resource Fig. S3) |
 | `13_county_projection_permutation.R` | permutation test of county cross-validation accuracy (run after 12) |
 | `14_raw_yield_response.R` | phenotypic response distance from raw yields, Online Resource 1 Supplementary Methods |
-| `15_type_profile_null.R` | permutation test of the number of markers that differ between types (Table 2), and of the correlation between type mean profiles (MG I, II, IV) |
+| `15_type_profile_null.R` | permutation test of the number of markers that differ between types (Table 1), and of the correlation between type mean profiles (MG I, II, IV) |
 | `16_figure_data.R` | location pairs, two-dimensional scaling, location coordinates and county growing degree days and vapor pressure deficit for the figures (`out/figure_data/`) |
-| `17_covariates_by_type.R` | share of the variation in each county covariate that lies between types, and correlation of growing degree days and vapor pressure deficit with latitude (Fig. 1, Results) |
-| `18_type_prediction.R` | prediction of line performance in held-out trials from same-type, all, other-type, nearest, profile-nearest, covariate-nearest and random sets of locations (Online Resource Table S8); uses ENVCLASS_CORES workers |
+| `17_covariates_by_type.R` | share of the variation in each county covariate that lies between types, and correlation of growing degree days and vapor pressure deficit with latitude (Fig. 1, Online Resource Table S4) |
+| `18_type_prediction.R` | prediction of line performance in held-out trials from same-type, all, other-type, nearest, profile-nearest, covariate-nearest and random sets of locations (Online Resource Table S6); uses ENVCLASS_CORES workers |
 | `20_yield_divergence.R` | yield divergence between types, random-grouping comparison, yield penalty |
 | `21_latitude_test.R` | latitude models, latitude overlap, same-latitude pairs |
-| `22_marker_density.R` | marker subsets, Online Resource Table S2 |
+| `22_marker_density.R` | marker subsets, Online Resource Table S3 |
 | `23_blup_comparison.R` | mixed-model comparison, Online Resource Table S1 |
-| `24_era_stability.R` | retention between eras, Online Resource Table S6 |
-| `25_table_S5_check.R` | Online Resource Table S5 and the Gene Ontology test with the 10-gene rule |
+| `24_era_stability.R` | retention between eras, Online Resource Table S8 |
+| `25_table_S5_check.R` | Online Resource Table S2 (numbered S5 in earlier drafts, hence the file name) and the Gene Ontology test with the 10-gene rule |
 
 The county maps and county cross-validation in the paper come from scripts 12
 and 13. Script 06 fits the earlier 92-feature model and is kept for

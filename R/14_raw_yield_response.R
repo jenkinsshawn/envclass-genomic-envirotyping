@@ -7,7 +7,7 @@ if (!exists('ROOT')) source('R/00_setup.R')
 ## control; Online Resource 1, Supplementary Methods).
 ##
 ## Runs R/02_phenotypic_mantel.R up to the distance matrices for MG I to IV,
-## on the same locations as Table 1, and adds for each maturity group:
+## on the same locations as Table 2, and adds for each maturity group:
 ##   - phenotypic response distance from raw line-by-location mean yields
 ##     (1 minus the correlation over lines tested at both locations, at least
 ##     8 lines), and its Mantel correlation with genomic profile distance;
@@ -38,8 +38,8 @@ src_run <- append(src_run, c(
   "  d_raw_full <- pairwise_cor_dist(m_raw, PARAMS$min_pair_strains)"),
   after = a1)
 
-## after the Table 1 distance matrices exist, compute the raw-yield summaries
-## and return; the remaining Table 1 tests are not repeated here
+## after the Table 2 distance matrices exist, compute the raw-yield summaries
+## and return; the remaining Table 2 tests are not repeated here
 a2 <- grep("d_geo\\s*<- clean_dist", src_run)[1]
 stopifnot(!is.na(a2))
 src_run <- append(src_run, c(

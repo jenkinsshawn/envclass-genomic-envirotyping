@@ -91,7 +91,7 @@ loc_coords <- unique(loc_coords[!is.na(lat) & !is.na(lon)], by = 'loc_key')
 ## 02_phenotypic_mantel.R keeps only locations that join to a US county
 ## (sf/tigris, needs a download). Offline equivalent: the state code after the
 ## comma in Location is a US state abbreviation (drops ONT, QUE, MAN, SAS).
-## The check against Table 1 location counts is printed below.
+## The check against Table 2 location counts is printed below.
 ## Two location keys join a US and a Canadian site (Table_LocKey_Collisions.csv);
 ## the median coordinate, and so the county join, follows the site with more
 ## observations, so the state is taken from the most frequent Location string.
@@ -99,7 +99,7 @@ loc_state <- nust[, .N, by = .(loc_key, st = trimws(sub('^.*,', '', Location)))]
 loc_state <- unique(loc_state, by = 'loc_key')
 loc_us <- intersect(loc_coords[lat > 24 & lat < 50 & lon > -130 & lon < -60, loc_key],
                     loc_state[st %in% state.abb, loc_key])
-SETS <- c(validation = 'US locations (validation set of Table 1)',
+SETS <- c(validation = 'US locations (validation set of Table 2)',
           all = 'all profiled locations, including Canada')
 
 summ <- list(); ari_rows <- list(); pairs_rows <- list(); unplaced_rows <- list()
@@ -330,7 +330,7 @@ saveRDS(store, file.path(OUT8, 'shared_lines_store.rds'))
 
 tc <- fread(file.path(OUT, 'Table_PhenoMantel_Final.csv'))[, .(mg, n_locs)]
 chk <- merge(tc, tabs$Table_SL_Summary[location_set == 'validation', .(mg, locations_compared)], by = 'mg')
-cat('\nCheck against Table 1 location counts:\n'); print(chk)
+cat('\nCheck against Table 2 location counts:\n'); print(chk)
 options(width = 250)
 print(tabs$Table_SL_Summary); print(tabs$Table_SL_ARI); print(tabs$Table_SL_PairCounts)
 print(tabs$Table_SL_UnplacedLocations); print(ind_summ); print(tabs$Table_SL_PCFallback)

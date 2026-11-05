@@ -8,7 +8,7 @@ if (!exists('ROOT')) source('R/00_setup.R')
 ## Clean version of the simulation run from the console on 2026-07-16
 ## ("LAST.R", recovered from RStudio history; its output was printed only).
 ##
-## 1. The Table 1 distance matrices (genomic profile, phenotypic response,
+## 1. The Table 2 distance matrices (genomic profile, phenotypic response,
 ##    envirotyping, geographic) are rebuilt by running R/02_phenotypic_mantel.R
 ##    from a temporary copy that stops before its first fwrite(), with one line
 ##    added that keeps the matrices. Nothing in out/ is overwritten by 02.
@@ -40,7 +40,7 @@ if (!exists('ROOT')) source('R/00_setup.R')
 ##
 ## Writes out/power/Table_PartialMantel_Power.csv       (MG x beta)
 ##        out/power/Table_PartialMantel_Power80.csv     (80% thresholds)
-##        out/power/Table_PartialMantel_Table1Check.csv (rebuilt vs Table 1)
+##        out/power/Table_PartialMantel_Table1Check.csv (rebuilt vs Table 2)
 ## ============================================================================
 
 suppressPackageStartupMessages({ library(data.table); library(vegan); library(parallel) })
@@ -58,11 +58,11 @@ t_start <- Sys.time()
 cat(sprintf("Partial Mantel power: B_SIM = %d, permutations = %d, cores = %d\n",
             B_SIM, SIM_PERM, N_CORES))
 
-## ---- 1. Table 1 distance matrices -----------------------------------------
+## ---- 1. Table 2 distance matrices -----------------------------------------
 dist_cache <- file.path(OUT_PW, "table1_distances_v112.rds")
 if (file.exists(dist_cache)) {
   DISTS <- readRDS(dist_cache)
-  cat("Loaded cached Table 1 distance matrices\n")
+  cat("Loaded cached Table 2 distance matrices\n")
 } else {
   src02 <- readLines(file.path(ROOT, "R", "02_phenotypic_mantel.R"), warn = FALSE)
   anchor <- grep("d_geo\\s*<- clean_dist", src02)[1]
@@ -76,7 +76,7 @@ if (file.exists(dist_cache)) {
     ## the county join is read from a table of location -> county FIPS
     ## (data_offline/loc_fips_offline.csv) instead of st_join on the 2022
     ## cartographic county boundaries, and the MRM fit (not used here) is
-    ## skipped. Check Table_PartialMantel_Table1Check.csv against Table 1.
+    ## skipped. Check Table_PartialMantel_Table1Check.csv against Table 2.
     i0 <- grep("^suppressPackageStartupMessages\\(\\{", src_run)[1]
     i1 <- grep('^for \\(pkg in c\\("tigris", "sf"', src_run)[1]
     stopifnot(!is.na(i0), !is.na(i1), i0 < i1)

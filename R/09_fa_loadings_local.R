@@ -20,7 +20,7 @@
 ## permutation reference for chance agreement.
 ##
 ## Two location sets per maturity group:
-##   validation : the locations of Table 1 (reproduced in 08_shared_lines_comparison.R)
+##   validation : the locations of Table 2 (reproduced in 08_shared_lines_comparison.R)
 ##   all        : all profiled locations. The factor-analytic model can
 ##                estimate a correlation for pairs with few or no shared lines
 ##                through the common factors, so this set shows how it places

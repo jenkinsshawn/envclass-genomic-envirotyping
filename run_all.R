@@ -116,14 +116,14 @@ if (fresh(file.path(DATA, "marker_v2_results.rds"))) {
   }
 }
 
-## Table 1
+## Table 2
 p1 <- file.path(OUT, "Table_PhenoMantel_Final.csv")
 for (i in seq_along(c("I","II","III","IV"))) {
   mgv <- c("I","II","III","IV")[i]
-  add(sprintf("Table 1 Mantel MG %s", mgv),
+  add(sprintf("Table 2 Mantel MG %s", mgv),
       c(0.640, 0.566, 0.596, 0.561)[i],
       grab(p1, quote(mg == mgv), "mantel_genomic"))
-  add(sprintf("Table 1 n MG %s", mgv),
+  add(sprintf("Table 2 n MG %s", mgv),
       c(15, 17, 22, 14)[i],
       grab(p1, quote(mg == mgv), "n_locs"), tol = 0)
 }
